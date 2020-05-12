@@ -1,0 +1,43 @@
+﻿@model List<VideoVerhuur.Models.MandjeItem>
+@try
+{
+    {
+        ViewBag.Title = "WinkelMandje";
+    }
+    <h2>WinkelMandje</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>BandNr</th>
+                <th>Titel</th>
+                <th>InVoorraad</th>
+                <th>Prijs</th>
+                <th>Huren</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var mandjeItem in Model.ToList())
+                {
+                    Session["FilmLijst"] = Model;
+                    Session["VerwijderFilm"] = mandjeItem;
+                    <tr>
+                        <td class="col-md-2">@mandjeItem.film.BandNr </td>
+                        <td>@mandjeItem.film.Titel</td>
+                        <td>@mandjeItem.film.InVoorraad</td>
+                        <td class="col-md-2">€ @Html.DisplayFor(m => mandjeItem.film.Prijs) </td>
+
+                        <td><a href="@Url.Action("Verwijderen", "Home")"> Verwijderen</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("Genres", "Home")">Verder winkelen</a>
+}
+catch (Exception ex)
+{
+    <p>@ex.Message</p>
+}

@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VideoVerhuurModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="BandNr" />
+          </Key>
+          <Property Name="BandNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titel" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="GenreNr" Type="int" Nullable="false" />
+          <Property Name="InVoorraad" Type="int" Nullable="false" />
+          <Property Name="UitVoorraad" Type="int" Nullable="false" />
+          <Property Name="Prijs" Type="money" Nullable="false" />
+          <Property Name="TotaalVerhuurd" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="GenreNr" />
+          </Key>
+          <Property Name="GenreNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Genre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Klanten">
+          <Key>
+            <PropertyRef Name="KlantNr" />
+          </Key>
+          <Property Name="KlantNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naam" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Voornaam" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Straat_Nr" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostCode" Type="int" Nullable="false" />
+          <Property Name="Gemeente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KlantStat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HuurAantal" Type="int" Nullable="false" />
+          <Property Name="DatumLid" Type="date" Nullable="false" />
+          <Property Name="Lidgeld" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verhuur">
+          <Key>
+            <PropertyRef Name="VerhuurNr" />
+          </Key>
+          <Property Name="VerhuurNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlantNr" Type="int" Nullable="false" />
+          <Property Name="BandNr" Type="int" Nullable="false" />
+          <Property Name="VerhuurDatum" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_BandNr">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="Verhuur" Type="Self.Verhuur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="BandNr" />
+            </Principal>
+            <Dependent Role="Verhuur">
+              <PropertyRef Name="BandNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GenreNr">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="Films" Type="Self.Films" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenreNr" />
+            </Principal>
+            <Dependent Role="Films">
+              <PropertyRef Name="GenreNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_KlantNr">
+          <End Role="Klanten" Type="Self.Klanten" Multiplicity="1" />
+          <End Role="Verhuur" Type="Self.Verhuur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klanten">
+              <PropertyRef Name="KlantNr" />
+            </Principal>
+            <Dependent Role="Verhuur">
+              <PropertyRef Name="KlantNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VideoVerhuurModelStoreContainer">
+          <EntitySet Name="Films" EntityType="Self.Films" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Klanten" EntityType="Self.Klanten" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verhuur" EntityType="Self.Verhuur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_BandNr" Association="Self.fk_BandNr">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Verhuur" EntitySet="Verhuur" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GenreNr" Association="Self.fk_GenreNr">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Films" EntitySet="Films" />
+          </AssociationSet>
+          <AssociationSet Name="fk_KlantNr" Association="Self.fk_KlantNr">
+            <End Role="Klanten" EntitySet="Klanten" />
+            <End Role="Verhuur" EntitySet="Verhuur" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VideoVerhuurModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="BandNr" />
+          </Key>
+          <Property Name="BandNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GenreNr" Type="Int32" Nullable="false" />
+          <Property Name="InVoorraad" Type="Int32" Nullable="false" />
+          <Property Name="UitVoorraad" Type="Int32" Nullable="false" />
+          <Property Name="Prijs" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TotaalVerhuurd" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Verhuur" Relationship="Self.fk_BandNr" FromRole="Films" ToRole="Verhuur" />
+          <NavigationProperty Name="Genre" Relationship="Self.fk_GenreNr" FromRole="Films" ToRole="Genres" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreNr" />
+          </Key>
+          <Property Name="GenreNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Genre1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Films" Relationship="Self.fk_GenreNr" FromRole="Genres" ToRole="Films" />
+        </EntityType>
+        <EntityType Name="Klant">
+          <Key>
+            <PropertyRef Name="KlantNr" />
+          </Key>
+          <Property Name="KlantNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Straat_Nr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostCode" Type="Int32" Nullable="false" />
+          <Property Name="Gemeente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KlantStat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HuurAantal" Type="Int32" Nullable="false" />
+          <Property Name="DatumLid" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Lidgeld" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Verhuur" Relationship="Self.fk_KlantNr" FromRole="Klanten" ToRole="Verhuur" />
+        </EntityType>
+        <EntityType Name="Verhuur">
+          <Key>
+            <PropertyRef Name="VerhuurNr" />
+          </Key>
+          <Property Name="VerhuurNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlantNr" Type="Int32" Nullable="false" />
+          <Property Name="BandNr" Type="Int32" Nullable="false" />
+          <Property Name="VerhuurDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Films" Relationship="Self.fk_BandNr" FromRole="Verhuur" ToRole="Films" />
+          <NavigationProperty Name="Klanten" Relationship="Self.fk_KlantNr" FromRole="Verhuur" ToRole="Klanten" />
+        </EntityType>
+        <Association Name="fk_BandNr">
+          <End Role="Films" Type="Self.Film" Multiplicity="1" />
+          <End Role="Verhuur" Type="Self.Verhuur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="BandNr" />
+            </Principal>
+            <Dependent Role="Verhuur">
+              <PropertyRef Name="BandNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GenreNr">
+          <End Role="Genres" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Films" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenreNr" />
+            </Principal>
+            <Dependent Role="Films">
+              <PropertyRef Name="GenreNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_KlantNr">
+          <End Role="Klanten" Type="VideoVerhuurModel.Klant" Multiplicity="1" />
+          <End Role="Verhuur" Type="Self.Verhuur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klanten">
+              <PropertyRef Name="KlantNr" />
+            </Principal>
+            <Dependent Role="Verhuur">
+              <PropertyRef Name="KlantNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VideoVerhuurEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Films" EntityType="Self.Film" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Klants" EntityType="VideoVerhuurModel.Klant" />
+          <EntitySet Name="Verhuurs" EntityType="Self.Verhuur" />
+          <AssociationSet Name="fk_BandNr" Association="Self.fk_BandNr">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Verhuur" EntitySet="Verhuurs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GenreNr" Association="Self.fk_GenreNr">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Films" EntitySet="Films" />
+          </AssociationSet>
+          <AssociationSet Name="fk_KlantNr" Association="Self.fk_KlantNr">
+            <End Role="Klanten" EntitySet="Klants" />
+            <End Role="Verhuur" EntitySet="Verhuurs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VideoVerhuurModelStoreContainer" CdmEntityContainer="VideoVerhuurEntities">
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="VideoVerhuurModel.Film">
+              <MappingFragment StoreEntitySet="Films">
+                <ScalarProperty Name="BandNr" ColumnName="BandNr" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="GenreNr" ColumnName="GenreNr" />
+                <ScalarProperty Name="InVoorraad" ColumnName="InVoorraad" />
+                <ScalarProperty Name="UitVoorraad" ColumnName="UitVoorraad" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+                <ScalarProperty Name="TotaalVerhuurd" ColumnName="TotaalVerhuurd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="VideoVerhuurModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="GenreNr" ColumnName="GenreNr" />
+                <ScalarProperty Name="Genre1" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klants">
+            <EntityTypeMapping TypeName="VideoVerhuurModel.Klant">
+              <MappingFragment StoreEntitySet="Klanten">
+                <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
+                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="Straat_Nr" ColumnName="Straat_Nr" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Gemeente" ColumnName="Gemeente" />
+                <ScalarProperty Name="KlantStat" ColumnName="KlantStat" />
+                <ScalarProperty Name="HuurAantal" ColumnName="HuurAantal" />
+                <ScalarProperty Name="DatumLid" ColumnName="DatumLid" />
+                <ScalarProperty Name="Lidgeld" ColumnName="Lidgeld" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verhuurs">
+            <EntityTypeMapping TypeName="VideoVerhuurModel.Verhuur">
+              <MappingFragment StoreEntitySet="Verhuur">
+                <ScalarProperty Name="VerhuurNr" ColumnName="VerhuurNr" />
+                <ScalarProperty Name="KlantNr" ColumnName="KlantNr" />
+                <ScalarProperty Name="BandNr" ColumnName="BandNr" />
+                <ScalarProperty Name="VerhuurDatum" ColumnName="VerhuurDatum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

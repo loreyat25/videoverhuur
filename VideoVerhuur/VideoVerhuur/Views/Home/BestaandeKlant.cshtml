@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Bestaande Klant";
+}
+
+@try
+{
+
+    if (ViewBag.ErrorMessage != null)
+    {
+        <p><a href="@Url.Action("Index", "Home")"><h3>Foutieve gegevens, probeer opnieuw &raquo;</h3></a></p>
+    }
+    if (Session["klant"] != null)
+    {
+        <p><a href="@Url.Action("Genres", "Home")"><h3>Ga naar verhuringen &raquo;</h3></a></p>
+    }
+}
+catch (Exception ex)
+{
+    <p> @ex.Message </p>
+}

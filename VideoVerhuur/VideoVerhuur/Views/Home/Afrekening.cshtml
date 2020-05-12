@@ -1,0 +1,76 @@
+﻿@model List<VideoVerhuur.Models.MandjeItem>
+@{
+    ViewBag.Title = "Afrekening";
+}
+@try { 
+<h2>Afrekening</h2>
+if (Model != null)
+{
+    int teller = 0;
+    foreach (var mandjeItem in Model.ToList())
+    {
+
+        <table class="table">
+            @if (teller == 0)
+            {
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Prijs</th>
+                </tr>
+            </thead>
+            }
+
+
+
+            <tbody>
+                <tr>
+
+
+                    <td>@mandjeItem.film.Titel</td>
+                    <td class="col-md-2">€ @Html.DisplayFor(m => mandjeItem.film.Prijs) </td>
+
+
+                </tr>
+            </tbody>
+            @if (teller == Model.Count() - 1)
+            {
+                <tfoot>
+                    <tr>
+                        <td>Totaal</td>
+                        <td>€ @Html.DisplayFor(m => Session["TotalePrijs"])</td>
+                    </tr>
+                </tfoot>
+            }
+
+
+
+
+
+
+
+
+
+        </table>
+        teller++;
+        if (teller == Model.Count())
+        {
+            <p>wordt gefactureerd aan:</p>
+            <p>@mandjeItem.klant.Voornaam @mandjeItem.klant.Naam</p>
+            <p>@mandjeItem.klant.Straat_Nr</p>
+            <p>@mandjeItem.klant.PostCode @mandjeItem.klant.Gemeente</p>
+        }
+
+
+
+
+
+    }
+}
+}
+catch(Exception ex)
+{
+            <p>@ex.Message</p>
+}
+
+

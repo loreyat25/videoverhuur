@@ -1,0 +1,21 @@
+﻿@model VideoVerhuur.Models.MandjeItem
+@{
+    ViewBag.Title = "Verwijderen";
+}
+@try { 
+<h2>Verwijder Gehuurde Film</h2>
+<p>Weet u zeker dat u @Model.film.Titel wilt verwijderen</p>
+<form method="post" action="~/Home/Verwijderen" class="form-horizontal">
+    <div class="form-group">
+        <input type="submit" name="Ja" value="Ja" class="btn" />
+    </div>
+    <div class="form-group">
+        <input type="submit" name="Nee" value="Nee" class="btn" />
+    </div>
+</form>
+
+}
+catch (Exception ex)
+{
+<p>@ex.Message</p>
+}

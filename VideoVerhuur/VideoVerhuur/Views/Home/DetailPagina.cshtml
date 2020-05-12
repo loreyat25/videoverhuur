@@ -1,0 +1,44 @@
+﻿@model VideoVerhuur.Models.FilmViewModel
+@{
+    ViewBag.Title = "DetailPagina";
+}
+@try{
+<h2>@Model.Genre.Genre1</h2>
+
+ if(Model.Films.Count >0)
+    {
+<table class="table">
+    <thead>
+        <tr>
+            <th>BandNr</th>
+            <th>Titel</th>
+            <th>InVoorraad</th>
+            <th>Prijs</th>
+            <th>Huren</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var film in Model.Films)
+        {
+            <tr>
+                <td class="col-md-2">@Html.DisplayFor(m => film.BandNr) </td>
+                <td>@Html.DisplayFor(m => film.Titel)</td>
+                <td class="col-md-2">@Html.DisplayFor(m => film.InVoorraad) </td>
+                <td class="col-md-2">@Html.DisplayFor(m => film.Prijs) </td>
+               @if (film.InVoorraad > 0)
+               {
+                <td><a href="@Url.Action("WinkelMandje", "Home", new { filmid = film.BandNr })"> Huren</a></td>    
+               }
+            </tr>
+        }
+
+    </tbody>
+    
+</table>
+<a href="@Url.Action("Genres","Home")">Terug naar genre overzicht</a>
+    }
+}
+catch (Exception ex)
+{
+    <p>@ex.Message</p>
+}

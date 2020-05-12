@@ -1,0 +1,30 @@
+﻿@model VideoVerhuur.Models.FilmViewModel
+@{
+    ViewBag.Title = "Genres";
+}
+@try
+{
+    <h2>Klik op het gewenste GENRE</h2>
+    foreach (var genre in Model.Genres)
+    {
+        var url = Url.Action("DetailPagina", "Home", new { id = genre.GenreNr });
+        if (Model.Genre != null && Model.Genre.Genre1.Equals(genre.Genre1))
+        {
+            <li class="active">
+                <a href="@url">@genre.Genre1</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@url">@genre.Genre1</a>
+            </li>
+        }
+    }
+
+
+}
+catch (Exception ex)
+{
+    <p>@ex.Message</p>
+}

@@ -1,0 +1,39 @@
+﻿
+@{
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron">
+    <h1>VDAB Movies</h1>
+    <p class="lead"><img src="~/Images/videoVerhuur.jpg" alt="VideoVerhuur" /></p>
+
+    @if (Session["klant"] == null)
+    {
+
+        <p>Eerst aanmelden om te kunnen huren!</p>
+        <p><a href="@Url.Action("Index", "Home")"> naar beginpagina &raquo;</a></p>
+    }
+    @if (Session["klant"] != null)
+    {
+
+        var klant = (VideoVerhuur.Models.Klant)Session["klant"];
+        var naam = klant.Voornaam + " " + klant.Naam;
+        <p>Welkom @naam</p>
+        <p>
+
+            <a href="@Url.Action("Index", "Home")">Uitloggen en naar beginpagina &raquo;</a>
+            @if (Session["FilmLijst"] != null)
+            {
+            if (((List<VideoVerhuur.Models.MandjeItem>)Session["FilmLijst"]).Count != 0 && Session["klant"] != null)
+            {
+                <a href="@Url.Action("Afrekening", "Home")">Afrekenen</a>
+            }
+            }
+
+
+
+
+
+
+        </p>
+    }
+</div>

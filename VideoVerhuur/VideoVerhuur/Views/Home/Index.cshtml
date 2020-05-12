@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" action="~/Home/BestaandeKlant" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-3 control-label">Gebruikersnaam</label>
+                <div class="col-md-10">
+                    <input name="naam" id="naam" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Postcode</label>
+                <div class="col-md-10">
+                    <input name="postcode" id="postcode" type="number" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="aanmelden" value="aanmelden" class="btn" />
+            </div>
+        </form>
+    </div>
+</div>
